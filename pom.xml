@@ -3,11 +3,11 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com</groupId>
-	<artifactId>ESEO_TP_Server</artifactId>
+	<artifactId>twic_project</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>ESEO_TP_Server_</name>
+	<name>twic_project_</name>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
