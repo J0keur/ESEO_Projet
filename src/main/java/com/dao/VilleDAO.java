@@ -21,6 +21,10 @@ public class VilleDAO {
 	@Autowired
 	private DaoFactory daoFactory;
 
+	public VilleDAO(DaoFactory daoFactory) {
+		this.daoFactory = new DaoFactory();
+	}
+
 	public List<Ville> Villes() throws SQLException {
 		List<Ville> villes = new ArrayList<Ville>();
 		Connection connexion = null;
@@ -43,37 +47,6 @@ public class VilleDAO {
 			e.printStackTrace();
 
 		}
-		return villes;
-
-	}
-
-	public List<Ville> getVillesByCP(String cp) throws SQLException {
-		List<Ville> villes = new ArrayList<Ville>();
-		Connection connexion = null;
-		PreparedStatement statement = null;
-		ResultSet resultat = null;
-
-		try {
-			connexion = daoFactory.getConnection();
-			// System.out.println("je passe ici");
-			statement = connexion.prepareStatement("SELECT " + "* " + "FROM " + "ville_france WHERE Code_postal = ?");
-			statement.setString(1, cp);
-			resultat = statement.executeQuery();
-
-			while (resultat.next()) {
-				villes.add(new Ville(resultat.getString(2), resultat.getString(3),
-						new Coordonnees(resultat.getString(7), resultat.getString(6)), resultat.getString(1),
-						resultat.getString(4), resultat.getString(5)));
-
-			}
-			statement.close();
-			resultat.close();
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-
-		}
-
 		return villes;
 
 	}

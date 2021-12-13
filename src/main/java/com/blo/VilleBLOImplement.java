@@ -7,6 +7,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.config.JDBCConfiguration;
+import com.dao.DaoFactory;
 import com.dao.VilleDAO;
 import com.dto.Ville;
 
@@ -15,28 +17,22 @@ public class VilleBLOImplement implements VilleBLO {
 
 	@Autowired
 	private VilleDAO villeDao;
-
-	public List<Ville> getVilles() {
-		List<Ville> villes = null;
-		try {
-			villes  = villeDao.Villes();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return villes;
+	
+	public void init() {
+		DaoFactory dao = DaoFactory.getInstance();
+		this.villeDao = dao.getVilleDao();
 	}
 	
-	public List<Ville> getVillesByInsee(String insee) {
-		List<Ville> villes = null;
-		villes  = villeDao.getVillesByInsee(insee);
-		return villes;
-	}
-	
-	public List<Ville> getVillesByCP(String cp) {
+	public List<Ville> getVilles(String insee) {
+		init();
 		List<Ville> villes = null;
 		try {
-			villes  = villeDao.getVillesByCP(cp);
+			if(insee == null) {
+				villes  = villeDao.Villes();
+			}
+			else {
+				villes = villeDao.getVillesByInsee(insee);
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -45,6 +41,7 @@ public class VilleBLOImplement implements VilleBLO {
 	}
 
 	public void ajouterVille(Ville ville) {
+		init();
 		try {
 			villeDao.ajouterVille(ville);
 		} catch (SQLException e) {
@@ -54,10 +51,12 @@ public class VilleBLOImplement implements VilleBLO {
 	}
 
 	public void modifierVille(Ville ville, String insee) {
+		init();
 		villeDao.modifierVille(ville, insee);
 	}
 
 	public void supprimerVille(String insee) {
+		init();
 		villeDao.supprimerVille(insee);
 	}
 

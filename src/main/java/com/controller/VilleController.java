@@ -22,38 +22,25 @@ public class VilleController {
 	@Autowired
 	private VilleBLO villeService;
 	
-	
-
 	@RequestMapping(value ="/ville",method= RequestMethod.GET)
 	@ResponseBody
-	public List<Ville>  appelGetVilles() {
-		return villeService.getVilles();
+	public List<Ville>  appelGetVilles(@RequestParam(required = false,value = "insee") String insee) {
+		return villeService.getVilles(insee);
 	}
 	
-	@RequestMapping(value ="/villebycp",method= RequestMethod.GET)
-	@ResponseBody
-	public List<Ville>  appelGetVillesByCP(@RequestParam(required = true,value = "cp") String cp) {
-		return villeService.getVillesByCP(cp);
-	}
-	
-	@RequestMapping(value ="/villebyinsee",method= RequestMethod.GET)
-	@ResponseBody
-	public List<Ville>  appelGetVillesByInsee(@RequestParam(required = true,value = "insee") String insee) {
-		return villeService.getVillesByInsee(insee);
-	}
-	
-	@PostMapping("/ajoutville")
+	@PostMapping("/ville")
 	public void ajouterVille(@RequestBody Ville ville) {
 		villeService.ajouterVille(ville);
 	}
 	
-	@PostMapping("/modifville")
-	public void modifierVille(@RequestBody Ville ville, String insee) {
+	@RequestMapping(value ="/ville",method= RequestMethod.PUT)
+	public void modifierVille(@RequestBody Ville ville, @RequestParam(required = true,value = "insee") String insee) {
+		System.out.println("Appel du PUT");
 		villeService.modifierVille(ville, insee);
 	}
 	
-	@RequestMapping(value = "/supprville", method= RequestMethod.DELETE)
-	public void supprimerVille(@RequestParam(required = true,value = "codeInsee") String insee) {
+	@RequestMapping(value = "/ville", method= RequestMethod.DELETE)
+	public void supprimerVille(@RequestParam(required = true,value = "insee") String insee) {
 		villeService.supprimerVille(insee);
 	}
 	

@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class DaoFactory {
 
-	private static String url="jdbc:mysql://localhost:3306/twic";
+	private static String url="jdbc:mysql://localhost:3306/ville_france_mysql";
 	
     private static String username="root";
     
@@ -22,7 +22,8 @@ public class DaoFactory {
 	
 
 	public Connection getConnection() throws SQLException {
-		connection= DriverManager.getConnection(url, username, password);		
+		connection= DriverManager.getConnection(url, username, password);	
+		//System.out.println("je suis connecte");
 		return connection;
 	}
 	
@@ -34,6 +35,10 @@ public class DaoFactory {
         }
         DaoFactory instance = new DaoFactory();
         return instance;
+	}
+	
+	public VilleDAO getVilleDao() {
+		return new VilleDAO(this);
 	}
 
 }
